@@ -1,6 +1,4 @@
 import { Link } from "react-router";
-import PlusIcon from "../../components/icons/PlusIcon";
-import CustomSearchInput from "../../components/shared/CustomSearchInput";
 import VideoIcon from "../../components/icons/VideoIcon";
 import { useEffect, useRef, useState } from "react";
 import { getDisplayingCameras } from "../../services/cameraService";
@@ -63,7 +61,7 @@ const DisplayCamerasPage = () => {
             <VideoIcon />
             <img
               // ref={imgRef}
-              src={`http://${setting.deviceIp}:5000/${camera.ip}/live`}
+              src={`http://${setting.deviceIp}:5000/live?camera_url=${camera.ip}`}
               alt="Live Preview"
               style={{
                 width: "100%",

@@ -97,7 +97,7 @@ const AddCameraPage = () => {
             ref={nameRef}
           />
           <CustomInput
-            label={"آی‌پی دوربین"}
+            label={"آدرس دوربین"}
             icon={<IpIcon />}
             ref={ipRef}
           />

@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { deleteCameras, getCameras } from "../../services/cameraService";
 import LoadingModal from "../../components/modals/LoadingModal";
 import DeleteModal from "../../components/modals/DeleteModal";
-import DeleteIcon from '../../components/icons/DeleteIcon';
-import EditIcon from '../../components/icons/EditIcon';
-import CustomTable from '../../components/shared/CustomTable';
-import { getTime, toShamsi } from '../../utils/helper';
-import CustomCheckbox from '../../components/shared/CustomCheckbox';
+import DeleteIcon from "../../components/icons/DeleteIcon";
+import EditIcon from "../../components/icons/EditIcon";
+import CustomTable from "../../components/shared/CustomTable";
+import { getTime, toShamsi } from "../../utils/helper";
+import CustomCheckbox from "../../components/shared/CustomCheckbox";
 import CustomButton from "../../components/shared/CustomButton";
 
 const CamerasPage = () => {
@@ -49,9 +49,7 @@ const CamerasPage = () => {
           .map((camera) => camera.cameraId),
       });
       setCameras(cameras.filter((camera) => !camera.selected));
-      setAllCameras(
-        cameras.filter((camera) => !camera.selected)
-      );
+      setAllCameras(cameras.filter((camera) => !camera.selected));
       notif_success("دوربین های انتخاب شده با موفقیت حذف شدند.");
       setIsDeleting(false);
     } catch (err) {
@@ -86,8 +84,7 @@ const CamerasPage = () => {
               onClick={() =>
                 navigate(
                   `/cameras/edit/${
-                    cameras.find((camera) => camera.selected)
-                      ?.cameraId || 0
+                    cameras.find((camera) => camera.selected)?.cameraId || 0
                   }`
                 )
               }
@@ -100,9 +97,7 @@ const CamerasPage = () => {
               style={{ color: "#69120B" }}
               onClick={() => setDeleteModal(true)}
             >
-              حذف{" "}
-              {cameras.filter((camera) => camera.selected).length}{" "}
-              ردیف
+              حذف {cameras.filter((camera) => camera.selected).length} ردیف
             </span>
           )}
           {!isEditing && (
@@ -115,13 +110,7 @@ const CamerasPage = () => {
         </div>
       </div>
       <CustomTable
-        headers={[
-          "نام دوربین",
-          "گیت",
-          "جهت",
-          "آی‌پی دوربین",
-          "تاریخ ثبت",
-        ]}
+        headers={["نام دوربین", "گیت", "جهت", "تاریخ ثبت"]}
         separated={isDeleting || isEditing}
       >
         {cameras.map((camera) => (
@@ -133,10 +122,11 @@ const CamerasPage = () => {
               <span>{camera.Gate?.name}</span>
             </div>
             <div className="custom-table-col-text">
-              <span>{camera.direction === "enter" ? "ورود" : "خروج"}</span>
-            </div>
-            <div className="custom-table-col-text">
-              <span>{camera.ip}</span>
+              {camera.direction === "enter" ? (
+                <span className="custom-badge-success">ورودی</span>
+              ) : (
+                <span className="custom-badge-danger">خروجی</span>
+              )}
             </div>
             <div className="custom-table-col-date-time">
               <div>{toShamsi(camera.createdAt)}</div>

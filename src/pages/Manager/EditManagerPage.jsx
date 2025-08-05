@@ -133,7 +133,7 @@ const EditManagerPage = () => {
             <div className="camera-stream-title">{mainCamera.name}</div>
             <VideoIcon />
             <img
-              src={`http://${setting.deviceIp}:5000/${mainCamera.ip}/detection`}
+              src={`http://${setting.deviceIp}:5000/detection?camera_url=${mainCamera.ip}`}
               alt="Live Preview"
               style={{
                 width: "100%",

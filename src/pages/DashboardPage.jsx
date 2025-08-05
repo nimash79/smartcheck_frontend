@@ -99,9 +99,11 @@ const DashboardPage = () => {
               <span>٪ {report.confidenceFactor}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <div className="custom-badge-success">
-                {report.Camera.direction == "enter" ? "ورودی" : "خروجی"}
-              </div>
+              {report.Camera.direction === "enter" ? (
+                <div className="custom-badge-success">ورودی</div>
+              ) : (
+                <div className="custom-badge-danger">خروجی</div>
+              )}
               <div style={{ marginRight: 8 }}>{report.Camera.name}</div>
             </div>
             <div className="custom-table-col-date-time">

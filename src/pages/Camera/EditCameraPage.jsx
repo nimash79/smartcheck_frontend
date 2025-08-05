@@ -102,7 +102,7 @@ const EditCameraPage = () => {
             defaultValue={camera.name}
           />
           <CustomInput
-            label={"آی‌پی دوربین"}
+            label={"آدرس دوربین"}
             icon={<IpIcon />}
             ref={ipRef}
             defaultValue={camera.ip}
