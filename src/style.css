@@ -323,3 +323,25 @@ p {
   border: 1px solid var(--primary_500);
   margin-right: 42px;
 }
+
+/* Filter section */
+.filter-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.filter-section > div {
+  margin: 0 5px;
+}
+.filter-section label {
+  width: 100%;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.filter-buttons > button {
+  margin: 0 5px;
+}
+/* End filter section */

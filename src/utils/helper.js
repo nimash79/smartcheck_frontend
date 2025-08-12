@@ -4,6 +4,10 @@ export const twoDigit = (num) => {
   return ("0" + num).slice(-2);
 };
 
+export const p2e = (str) => {
+  return str.replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+}
+
 export const formatToCurrency = (amount) => {
   return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };

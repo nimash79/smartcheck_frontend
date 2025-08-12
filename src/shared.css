@@ -54,6 +54,13 @@
   padding: 8px 24px;
   color: var(--neutral_100);
 }
+.custom-button-outline {
+  border: 1px solid var(--primary_400);
+  outline: none;
+  border-radius: 14px;
+  padding: 8px 24px;
+  color: var(--neutral_950);
+}
 .custom-submit-button {
   background-color: var(--success_primary);
   border: none;

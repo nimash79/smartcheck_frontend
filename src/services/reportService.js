@@ -27,6 +27,8 @@ export const getReportsOfPerson = async ({
   sortBy = "createdAt",
   order = "desc",
   search = "",
+  from = "",
+  to = "",
 }) => {
   return http.get(`${API_URL}/reports/person/${personId}`, {
     params: {
@@ -35,6 +37,8 @@ export const getReportsOfPerson = async ({
       sortBy,
       order,
       search,
+      from,
+      to,
     },
   });
 };

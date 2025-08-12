@@ -16,7 +16,12 @@ const CustomCalendarInput = ({
     <div
       className="custom-input-container"
       style={containerStyle}
-      onClick={() => datePickerRef.current.openCalendar()}
+      onClick={(e) => {
+        if (datePickerRef.current?.contains(e.target)) {
+          return;
+        }
+        datePickerRef.current?.openCalendar();
+      }}
     >
       <div className="icon">
         <CalendarIcon />

@@ -4,11 +4,17 @@ import CloseIcon from "../icons/CloseIcon";
 import { useEffect, useState } from "react";
 import { getReportsOfPerson } from "../../services/reportService";
 import { getTime, toShamsi } from "../../utils/helper";
+import CustomCalendarInput from '../shared/CustomCalendarInput';
+import CustomButton from '../shared/CustomButton';
+import LoadingModal from "../modals/LoadingModal";
 
 const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
   const [ready, setReady] = useState(false);
   const [reports, setReports] = useState([]);
   const [totalPages, setTotalPages] = useState([]);
+  const [loadingModal, setLoadingModal] = useState(false);
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -18,6 +24,24 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
       setTotalPages(res.data.data.totalPages);
     })();
   }, [isOpen]);
+
+  const submitFilter = async () => {
+    setLoadingModal(true);
+    try {
+      const res = await getReportsOfPerson({personId, from, to});
+      setReports(res.data.data.reports);
+      setTotalPages(res.data.data.totalPages);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingModal(false);
+    }
+  }
+
+  const clearFilterParams = () => {
+    setFrom();
+    setTo();
+  }
 
 
   if (!personId) return null;
@@ -42,10 +66,27 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
+            <LoadingModal isOpen={loadingModal} />
             <div className="custom-modal-close" onClick={onClose}>
               <CloseIcon />
             </div>
             <p className="title">تاریخچه حضور غیاب {reports[0]?.Person?.name}</p>
+            <div className="filter-container">
+              <div className="filter-section">
+                <div>
+                  <label>از تاریخ:</label>
+                  <CustomCalendarInput value={from} onChange={setFrom} />
+                </div>
+                <div>
+                  <label>تا تاریخ:</label>
+                  <CustomCalendarInput value={to} onChange={setTo} />
+                </div>
+              </div>
+              <div className="filter-buttons">
+                <CustomButton text={"ریست"} outline onClick={clearFilterParams} />
+                <CustomButton text={"اعمال فیلتر"} onClick={submitFilter} />
+              </div>
+            </div>
             <CustomTable headers={["تاریخ ثبت", "ضریب اطمینان", "وضعیت"]}>
               {reports.map((report) => (
                 <div key={report.reportId} className="custom-table-row">
@@ -61,12 +102,12 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {report.Camera.direction === "enter" ? (
                       <div className="custom-badge-success">
-                      ورودی
-                    </div>
+                        ورودی
+                      </div>
                     ) : (
                       <div className="custom-badge-danger">
-                      خروجی
-                    </div>
+                        خروجی
+                      </div>
                     )}
                     <div style={{ marginRight: 8 }}>{report.Camera.name}</div>
                   </div>
