@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CustomTable from "../shared/CustomTable";
 import CloseIcon from "../icons/CloseIcon";
 import { useEffect, useState } from "react";
-import { getReportsOfPerson } from "../../services/reportService";
+import { getReportsOfPerson, getReportsOfPersonExcel } from "../../services/reportService";
 import { getTime, toShamsi } from "../../utils/helper";
 import CustomCalendarInput from '../shared/CustomCalendarInput';
 import CustomButton from '../shared/CustomButton';
@@ -43,6 +43,31 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
     setTo();
   }
 
+  const handleExport = async () => {
+
+    try {
+      const res = await getReportsOfPersonExcel({personId});
+
+      const blob = new Blob([res.data], {
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      const link = document.createElement("a");
+      const downloadUrl = window.URL.createObjectURL(blob);
+      link.href = downloadUrl;
+      link.download = `reports_${reports[0]?.Person?.name}_${Date.now()}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Export failed:", error);
+      alert("Failed to download Excel file");
+    }
+  };
+
 
   if (!personId) return null;
   return (
@@ -71,6 +96,7 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
               <CloseIcon />
             </div>
             <p className="title">تاریخچه حضور غیاب {reports[0]?.Person?.name}</p>
+            <CustomButton text={"خروجی اکسل"} onClick={handleExport} />
             <div className="filter-container">
               <div className="filter-section">
                 <div>

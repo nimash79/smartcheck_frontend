@@ -53,7 +53,7 @@ const EditCameraPage = () => {
       const res = await editCamera({
         cameraId,
         name: nameRef.current.value,
-        gateId: gateIdRef.current.value,
+        gateId: gateIdRef.current.value == 0 ? undefined : gateIdRef.current.value,
         direction: directionRef.current.value,
         ip: ipRef.current.value,
         main: isMain,
@@ -75,9 +75,6 @@ const EditCameraPage = () => {
       } else if (res.data.data.status === 4) {
         notif_error("دوربین موردنظر یافت نشد.");
         return;
-      } else if (res.data.data.status === 5) {
-        notif_error("گیت موردنظر یافت نشد.");
-        return;
       }
       notif_success("دوربین موردنظر با موفقیت ویرایش شد.");
       navigate("/cameras");
@@ -87,6 +84,7 @@ const EditCameraPage = () => {
       setLoading(false);
     }
   };
+  console.log(camera?.gateId);
   return (
     <div className="users-page">
       <LoadingModal isOpen={loading} />
@@ -120,6 +118,10 @@ const EditCameraPage = () => {
             initialValue={camera.direction}
             ref={directionRef}
           />
+          <div style={{display: "flex"}}>
+            <span style={{marginLeft: 16}}>دوربین اصلی؟</span>
+            <CustomCheckbox checked={isMain} onChange={() => setIsMain(!isMain)} />
+          </div>
           <CustomDropdown
             icon={<GateIcon />}
             ref={gateIdRef}
@@ -135,10 +137,6 @@ const EditCameraPage = () => {
           <div style={{display: "flex"}}>
             <span style={{marginLeft: 16}}>تماشای لحظه ای؟</span>
             <CustomCheckbox checked={isDisplay} onChange={() => setIsDisplay(!isDisplay)} />
-          </div>
-          <div style={{display: "flex"}}>
-            <span style={{marginLeft: 16}}>دوربین اصلی؟</span>
-            <CustomCheckbox checked={isMain} onChange={() => setIsMain(!isMain)} />
           </div>
         </div>
         <div

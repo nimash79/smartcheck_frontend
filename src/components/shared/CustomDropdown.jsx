@@ -21,8 +21,10 @@ const CustomDropdown = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    setValue(initialValue);
-    inputRef.current.value = list.find(l => l.value === initialValue)?.label || "";
+    if (initialValue) {
+      setValue(initialValue);
+      inputRef.current.value = list.find(l => l.value === initialValue)?.label || "";
+    }
   }, [initialValue, list])
 
   useEffect(() => {
