@@ -20,6 +20,10 @@ const PanelLayout = ({children}) => {
           <DashboardIcon color={location.pathname === "/" ? "#E9F3FB" : "#1D1D1D"} />
            <span>داشبورد</span>
         </Link>
+        <Link to="/alarms" className={location.pathname.startsWith("/alarms") ? "panel-layout-button active" : "panel-layout-button"}>
+          <DashboardIcon color={location.pathname.startsWith("/alarms") ? "#E9F3FB" : "#1D1D1D"} />
+           <span>هشدار ها</span>
+        </Link>
         <Link to="/cameras/display" className={location.pathname.startsWith("/cameras") ? "panel-layout-button active" : "panel-layout-button"}>
           <CameraIcon color={location.pathname.startsWith("/cameras") ? "#E9F3FB" : "#1D1D1D"}  />
            <span>دوربین ها</span>

@@ -25,6 +25,7 @@ import SettingsPage from "./pages/Settings/SettingsPage";
 import ManagersPage from './pages/Manager/ManagersPage';
 import AddManagerPage from './pages/Manager/AddManagerPage';
 import EditManagerPage from './pages/Manager/EditManagerPage';
+import AlarmsPage from "./pages/Alarm/AlarmsPage";
 
 const App = () => {
   const [isReady, setIsReady] = useState(false);
@@ -44,6 +45,8 @@ const App = () => {
       <PanelLayout>
         <Routes>
           <Route path="/" Component={DashboardPage} />
+          {/* Alarm */}
+          <Route path="/alarms" Component={AlarmsPage} />
           {/* Camera */}
           <Route path="/cameras/display" Component={DisplayCamerasPage} />
           <Route path="/cameras" Component={CamerasPage} />

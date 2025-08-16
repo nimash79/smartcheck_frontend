@@ -116,7 +116,8 @@ p {
   background-color: var(--primary_200);
   padding-top: 99px;
   width: 15%;
-  min-height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
 }
 
 
@@ -142,14 +143,11 @@ p {
 }
 
 .our-product {
-  position: absolute;
-  bottom: 40px;
-  right: 0;
-  left: 0;
   font-size: 20px;
   font-style: bold;
   color: #172931;
   text-align: center;
+  margin-bottom: 24px;
 }
 .our-product img {
   width: 80px;
@@ -353,3 +351,14 @@ p {
   margin: 0 5px;
 }
 /* End filter section */
+
+.alarms-page {
+  padding: 32px 90px;
+}
+
+.alarms-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}

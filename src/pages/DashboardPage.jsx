@@ -3,7 +3,7 @@ import ArrowDownIcon from "../components/icons/ArrowDownIcon";
 import CustomTable from "../components/shared/CustomTable";
 import { getReports } from "../services/reportService";
 import { getTime, toShamsi } from "../utils/helper";
-import { notif_success } from "../utils/toast";
+import { notif_success, notif_warning } from "../utils/toast";
 
 const DashboardPage = () => {
   const [reports, setReports] = useState([]);
@@ -32,6 +32,10 @@ const DashboardPage = () => {
         });
         audioRef.current.play();
         notif_success("تردد جدید ثبت شد!");
+      } else if (data.type === "alarm") {
+        console.log("alarm");
+        audioRef.current.play();
+        notif_warning("هشدار جدید!!!");
       }
     };
 
