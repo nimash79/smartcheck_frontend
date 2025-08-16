@@ -12,23 +12,27 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
   const [ready, setReady] = useState(false);
   const [reports, setReports] = useState([]);
   const [totalPages, setTotalPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loadingModal, setLoadingModal] = useState(false);
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
 
   useEffect(() => {
     if (!isOpen) return;
+    if (!currentPage) return;
+    setLoadingModal(true);
     (async () => {
-      const res = await getReportsOfPerson({ personId });
+      const res = await getReportsOfPerson({ personId, page: currentPage });
       setReports(res.data.data.reports);
       setTotalPages(res.data.data.totalPages);
     })();
-  }, [isOpen]);
+    setLoadingModal(false);
+  }, [isOpen, currentPage]);
 
   const submitFilter = async () => {
     setLoadingModal(true);
     try {
-      const res = await getReportsOfPerson({personId, from, to});
+      const res = await getReportsOfPerson({ personId, from, to });
       setReports(res.data.data.reports);
       setTotalPages(res.data.data.totalPages);
     } catch (err) {
@@ -46,7 +50,7 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
   const handleExport = async () => {
 
     try {
-      const res = await getReportsOfPersonExcel({personId});
+      const res = await getReportsOfPersonExcel({ personId });
 
       const blob = new Blob([res.data], {
         type:
@@ -140,6 +144,12 @@ const PersonHistoryModal = ({ isOpen, onClose, personId }) => {
                 </div>
               ))}
             </CustomTable>
+            <div className="custom-pagination">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <CustomButton text={page} outline={page === currentPage ? false : true} style={{ marginRight: 8 }}
+                  onClick={() => setCurrentPage(page)} />
+              ))}
+            </div>
           </motion.div>
         </>
       )}

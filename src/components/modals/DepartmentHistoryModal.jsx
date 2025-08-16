@@ -10,26 +10,30 @@ import CustomCalendarInput from "../shared/CustomCalendarInput";
 
 const DepartmentHistoryModal = ({ isOpen, onClose, departmentId }) => {
   const [reports, setReports] = useState([]);
-  const [totalPage, setTotalPage] = useState();
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   const [loadingModal, setLoadingModal] = useState(false);
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
   useEffect(() => {
     if (!isOpen) return;
+    if (!currentPage) return;
+    setLoadingModal(true);
     (async () => {
-      const res = await getReportsOfDepartment({ departmentId });
+      const res = await getReportsOfDepartment({ departmentId, page: currentPage });
       console.log("res:", res);
       setReports(res.data.data.reports);
-      setTotalPage(res.data.data.totalPage);
+      setTotalPages(res.data.data.totalPages);
     })();
-  }, [isOpen])
+    setLoadingModal(false);
+  }, [isOpen, currentPage])
 
   const submitFilter = async () => {
     setLoadingModal(true);
     try {
       const res = await getReportsOfDepartment({ departmentId, from, to });
       setReports(res.data.data.reports);
-      setTotalPage(res.data.data.totalPages);
+      setTotalPages(res.data.data.totalPages);
     } catch (err) {
       console.log(err);
     } finally {
@@ -116,12 +120,10 @@ const DepartmentHistoryModal = ({ isOpen, onClose, departmentId }) => {
             >
               {reports.map(report => (
                 <div className="custom-table-row">
-                  <div className="custom-table-col-image-text">
-                    <div>
-                      <img src="/icons/profile.png" />
-                    </div>
+                  <div className="custom-table-text">
                     <div>
                       <span>{report.Person.name}</span>
+                      <br />
                       <span>{report.Person.phoneNumber}</span>
                     </div>
                   </div>
@@ -149,6 +151,12 @@ const DepartmentHistoryModal = ({ isOpen, onClose, departmentId }) => {
                 </div>
               ))}
             </CustomTable>
+            <div className="custom-pagination">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <CustomButton text={page} outline={page === currentPage ? false : true} style={{ marginRight: 8 }}
+                  onClick={() => setCurrentPage(page)} />
+              ))}
+            </div>
           </motion.div>
         </>
       )}

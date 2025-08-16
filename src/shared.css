@@ -325,6 +325,7 @@
   background-color: var(--neutral_50);
   border-radius: 8px;
   z-index: 50;
+  overflow: auto;
 }
 .custom-modal .title {
   font-size: 28px;

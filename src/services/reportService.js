@@ -23,7 +23,7 @@ export const getReports = async ({
 export const getReportsOfPerson = async ({
   personId,
   page = 1,
-  limit = 10,
+  limit = 5,
   sortBy = "createdAt",
   order = "desc",
   search = "",
@@ -46,7 +46,7 @@ export const getReportsOfPerson = async ({
 export const getReportsOfDepartment = async ({
   departmentId,
   page = 1,
-  limit = 10,
+  limit = 5,
   sortBy = "createdAt",
   order = "desc",
   search = "",

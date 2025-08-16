@@ -262,6 +262,10 @@ p {
 .person-history-modal .custom-table-body {
   max-height: 400px;
   overflow-y: auto;
+  margin-bottom: 8px;
+}
+.person-history-modal .custom-pagination {
+  margin-bottom: 24px;
 }
 
 .department-history-modal {
@@ -274,6 +278,10 @@ p {
 .department-history-modal .custom-table-body {
   max-height: 400px;
   overflow-y: auto;
+  margin-bottom: 8px;
+}
+.department-history-modal .custom-pagination {
+  margin-bottom: 24px;
 }
 
 .add-person-form {
