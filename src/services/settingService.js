@@ -13,9 +13,9 @@ export const addSetting = ({ deviceIp, deviceName }) => {
   );
 };
 
-export const editSetting = ({ deviceIp, deviceName }) => {
+export const editSetting = ({ deviceIp, deviceName, keyWords }) => {
   return http.post(
     `${API_URL}/settings/edit`,
-    JSON.stringify({ deviceIp, deviceName })
+    JSON.stringify({ deviceIp, deviceName, keyWords })
   );
 };

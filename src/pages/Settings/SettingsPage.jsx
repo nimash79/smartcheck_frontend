@@ -6,6 +6,7 @@ import { notif_error, notif_success } from "../../utils/toast";
 import { editSetting, getSetting } from '../../services/settingService';
 import IpIcon from '../../components/icons/IpIcon';
 import DeviceIcon from '../../components/icons/DeviceIcon';
+import CusotmTextArea from "../../components/shared/CustomTxtArea";
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ const SettingsPage = () => {
 
   const ipRef = useRef(null);
   const nameRef = useRef(null);
+  const keyWordsRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -34,6 +36,7 @@ const SettingsPage = () => {
       const res = await editSetting({
         deviceIp: ipRef.current.value,
         deviceName: nameRef.current.value,
+        keyWords: keyWordsRef.current.value,
       });
       console.log("res:", res);
       if (res.data.code === 400) {
@@ -67,6 +70,7 @@ const SettingsPage = () => {
             ref={nameRef}
             defaultValue={setting.deviceName}
           />
+          <CusotmTextArea label={"کلمات کلیدی"} placeholder={"جداکردن با ،"} ref={keyWordsRef} defaultValue={setting.keyWords} />
         </div>
         <div
           style={{ display: "flex", justifyContent: "flex-end", marginTop: 24 }}
