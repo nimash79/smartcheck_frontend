@@ -17,6 +17,7 @@ export const addPerson = ({
   identificationCode,
   verified,
   face,
+  voice,
   isManager,
 }) => {
   return http.post(
@@ -28,6 +29,7 @@ export const addPerson = ({
       identificationCode,
       verified,
       face,
+      voice,
       isManager,
     })
   );
@@ -41,6 +43,7 @@ export const editPerson = ({
   identificationCode,
   verified,
   face,
+  voice,
   isManager,
 }) => {
   return http.post(
@@ -53,6 +56,7 @@ export const editPerson = ({
       identificationCode,
       verified,
       face,
+      voice,
       isManager,
     })
   );

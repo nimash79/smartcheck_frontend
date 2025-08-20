@@ -120,7 +120,7 @@ const ManagersPage = () => {
         separated={isDeleting || isEditing}
       >
         {persons.map((person) => (
-          <div className="custom-table-row">
+          <div key={person.personId} className="custom-table-row">
             <div className="custom-table-col-image-text">
               <div>
                 <img src="/icons/profile.png" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-const CustomButton = ({ text, link = false, route = "", outline = false, ...props }) => {
+const CustomButton = ({ text, icon, link = false, route = "", outline = false, ...props }) => {
   if (link) return (
     <Link to={route} className={outline ? "custom-button-outline" : 'custom-button'} {...props}>
       {text}
@@ -9,7 +9,7 @@ const CustomButton = ({ text, link = false, route = "", outline = false, ...prop
   )
   else return (
     <button type='button' className={outline ? "custom-button-outline" : 'custom-button'} {...props}>
-      {text}
+      {text || icon}
     </button>
   )
 }

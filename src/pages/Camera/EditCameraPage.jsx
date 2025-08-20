@@ -13,6 +13,7 @@ import GateIcon from "../../components/icons/GateIcon";
 import CameraIcon from "../../components/icons/CameraIcon";
 import CustomCheckbox from "../../components/shared/CustomCheckbox";
 import IpIcon from "../../components/icons/IpIcon";
+import MicrophoneIcon from "../../components/icons/MicrophoneIcon";
 
 const EditCameraPage = () => {
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ const EditCameraPage = () => {
   const gateIdRef = useRef(null);
   const directionRef = useRef(null);
   const ipRef = useRef(null);
+  const microphoneRef = useRef(null);
 
   const navigate = useNavigate();
   const {cameraId} = useParams();
@@ -56,6 +58,7 @@ const EditCameraPage = () => {
         gateId: gateIdRef.current.value == 0 ? undefined : gateIdRef.current.value,
         direction: directionRef.current.value,
         ip: ipRef.current.value,
+        microphone: microphoneRef.current.value,
         main: isMain,
         display: isDisplay,
       });
@@ -104,6 +107,12 @@ const EditCameraPage = () => {
             icon={<IpIcon />}
             ref={ipRef}
             defaultValue={camera.ip}
+          />
+          <CustomInput
+            label={"آدرس میکروفون"}
+            icon={<MicrophoneIcon />}
+            ref={microphoneRef}
+            defaultValue={camera.microphone}
           />
           <CustomDropdown
             label={"انتخاب جهت"}

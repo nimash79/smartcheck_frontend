@@ -10,10 +10,10 @@ export const getCamera = ({ cameraId }) => {
   return http.get(`${API_URL}/cameras/${cameraId}`);
 };
 
-export const addCamera = ({ name, direction, ip, main, display, gateId }) => {
+export const addCamera = ({ name, direction, ip, microphone, main, display, gateId }) => {
   return http.post(
     `${API_URL}/cameras/create`,
-    JSON.stringify({ name, direction, ip, main, display, gateId })
+    JSON.stringify({ name, direction, ip, microphone, main, display, gateId })
   );
 };
 
@@ -22,13 +22,14 @@ export const editCamera = ({
   name,
   direction,
   ip,
+  microphone,
   main,
   display,
   gateId,
 }) => {
   return http.post(
     `${API_URL}/cameras/edit`,
-    JSON.stringify({ cameraId, name, direction, ip, main, display, gateId })
+    JSON.stringify({ cameraId, name, direction, ip, microphone, main, display, gateId })
   );
 };
 

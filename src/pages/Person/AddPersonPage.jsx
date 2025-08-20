@@ -17,14 +17,45 @@ import LoadingModal from "../../components/modals/LoadingModal";
 import { addPerson } from "../../services/personService";
 import { notif_error, notif_success } from "../../utils/toast";
 import { useNavigate } from "react-router";
+import MicrophoneIcon from "../../components/icons/MicrophoneIcon";
+import MicrophoneDisabledIcon from "../../components/icons/MicrophoneDisabledIcon";
 
 const AddPersonPage = () => {
   const [departments, setDepartments] = useState([]);
   const [mainCamera, setMainCamera] = useState({});
   const [setting, setSetting] = useState({});
   const [face, setFace] = useState();
+  const [voice, setVoice] = useState();
   const [faceExists, setFaceExists] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  /* Recording Audio */
+  const [recording, setRecording] = useState(false);
+
+  const startRecording = async () => {
+    try {
+      await fetch(
+        `http://localhost:5000/start_recording?url=${mainCamera.microphone}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      setRecording(true);
+    } catch (err) {
+      console.error("Error requesting:", err);
+    }
+  };
+
+  const stopRecording = async () => {
+    await fetch("http://localhost:5000/stop_recording", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: mainCamera.microphone }),
+    });
+    setRecording(false);
+  };
+  /* End Recording Audio */
 
   const nameRef = useRef();
   const phoneNumberRef = useRef();
@@ -60,7 +91,10 @@ const AddPersonPage = () => {
       if (data.type === "face_detected") {
         setFaceExists(data.exists);
         if (!data.exists) setFace(data.face);
-        console.log(`Face detected on camera ${data.camera_ip}`);
+        console.log(`Face detected on camera: ${data.camera_url}`);
+      } else if (data.type === "add_voice") {
+        setVoice(data.voice);
+        console.log(`Voice added from microphone: ${data.microphone_url}`);
       }
     };
 
@@ -78,6 +112,10 @@ const AddPersonPage = () => {
       notif_error("چهره ای ثبت نشده است.");
       return;
     }
+    if (!voice) {
+      notif_error("صدایی ضبط نشده است");
+      return;
+    }
     try {
       setLoading(true);
       const res = await addPerson({
@@ -87,6 +125,7 @@ const AddPersonPage = () => {
         departmentId: departmentIdRef.current.value,
         verified: true,
         face,
+        voice,
         isManager: false,
       });
       console.log("res:", res);
@@ -171,10 +210,30 @@ const AddPersonPage = () => {
               {faceExists ? (
                 <span style={{ marginRight: 8 }}>چهره تکراری می باشد</span>
               ) : (
-                <span style={{ marginRight: 8 }}>چهره ای تشخیص داده نشد</span>  
+                <span style={{ marginRight: 8 }}>چهره ای تشخیص داده نشد</span>
               )}
             </div>
           )}
+          <div className="audio-record">
+            <CustomButton
+              icon={
+                !recording ? <MicrophoneIcon /> : <MicrophoneDisabledIcon />
+              }
+              style={{
+                marginTop: 8,
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+              onClick={recording ? stopRecording : startRecording}
+            />
+            <span style={{ marginRight: 8, fontSize: 14 }}>
+              {recording
+                ? "برای توقف ضبط صدا روی دکمه کلیک کنید."
+                : "برای شروع ضبط صدا روی دکمه کلیک کنید."}
+            </span>
+          </div>
         </div>
       </div>
       <div

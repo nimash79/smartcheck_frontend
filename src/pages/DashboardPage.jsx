@@ -26,8 +26,8 @@ const DashboardPage = () => {
         console.log("traffic detected:", data);
         setReports((rs) => {
           const list = [...rs];
-          if (list.length === 10) list[0] = data;
-          else list.unshift(data);
+          if (list.length === 10) list.pop();
+          list.unshift(data);
           return list;
         });
         audioRef.current.play();
